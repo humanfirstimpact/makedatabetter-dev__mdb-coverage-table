@@ -147,9 +147,17 @@ Custom property | Description | Default
         display: block;
       }
 
+       :host #modal #buttons {
+        display: flex;
+        justify-content: flex-end;
+      }
+
        :host #modal paper-button {
-        color: #fff;
-        background-color: #00b7f5;
+        --paper-button: {
+          vertical-align: text-bottom;
+          color: #5caadb;
+          font-weight: 600;
+        }
       }
     </style>
     <div class="title-row">
