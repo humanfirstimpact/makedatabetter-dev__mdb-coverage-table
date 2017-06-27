@@ -332,6 +332,7 @@ Custom property | Description | Default
 
         this.set('columns.' + index + '.flagged', true);
         this.set('columns.' + index + '.flaggedIn', lob);
+        this.fire('flag-column', column);
         this._closeModal();
       },
 
