@@ -5,6 +5,7 @@
     "polymer": "Polymer/polymer#^1.4.0",
     "mdb-radio-list": "git://github.com/makedatabetter-dev/mdb-radio-list.git",
     "mdb-title": "git://github.com/makedatabetter-dev/mdb-title.git",
+    "mdb-help-text": "git://github.com/makedatabetter-dev/mdb-help-text.git",
     "vaadin-grid": "vaadin/vaadin-grid#^2.0.1",
     "paper-dialog": "PolymerElements/paper-dialog#^2.0.0"
   },

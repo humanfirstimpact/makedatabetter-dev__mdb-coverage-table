@@ -170,13 +170,25 @@ Custom property | Description | Default
         opacity: 0.5;
         z-index: 100;
       }
+
+       :host .title-row-icons iron-icon {
+        color: #5caadb;
+      }
+
+       :host .title-row-icons mdb-help-text {
+        --mdb-help-icon: {
+          color: #5caadb;
+          height: 24px;
+          width: 24px;
+        }
+      }
     </style>
     <div class="title-row">
       <mdb-title help-text="{{helpText}}" level="2">{{titleText}}</mdb-title>
       <div class="title-row-icons">
         <div class="indicator-icon"></div>
         <div class="indicator-icon orange"></div>
-        <iron-icon icon="icons:lock-open"></iron-icon>
+        <mdb-help-text icon="icons:lock-open" help-text="The open lock icon on the right indicates that you have access to view the data. The blue circle to the left of the lock glows when unscrambled data is shown. The grey circle to the left of the blue one glows when scrambled data is being shown. If the lock icon shows a closed lock, it means that you need to request the information owner to grant you access to view the data. Clicking on the closed lock will do that for you."></mdb-help-text>
       </div>
     </div>
     <div class="table-options">
