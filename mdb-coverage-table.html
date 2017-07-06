@@ -257,6 +257,7 @@ Custom property | Description | Default
         </paper-radio-group>
       </div>
       <div id="buttons">
+        <paper-button id="unflag" on-tap="_unflag">Unflag</paper-button>
         <paper-button id="cancel" on-tap="_closeModal">Cancel</paper-button>
         <paper-button id="flag" on-tap="_flag">Flag</paper-button>
       </div>
@@ -345,6 +346,17 @@ Custom property | Description | Default
         this.set('columns.' + index + '.flagged', true);
         this.set('columns.' + index + '.flaggedIn', lob);
         this.fire('flag-column', column);
+        this._closeModal();
+      },
+
+      _unflag: function () {
+        var that = this,
+          column = this.columns.find(function (e) { return that.selectedColumn === e.name; }),
+          index = this.columns.indexOf(column);
+
+        this.set('columns.' + index + '.flagged', false);
+        this.set('columns.' + index + '.flaggedIn', undefined);
+        this.fire('unflag-column', column);
         this._closeModal();
       },
 
