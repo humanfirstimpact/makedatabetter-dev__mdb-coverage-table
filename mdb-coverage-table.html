@@ -44,6 +44,7 @@ Custom property | Description | Default
           @apply(--mdb-coverage-table-header-cell);
         }
         --vaadin-grid-body-cell: {
+          color: var(--mdb-primary-text-dark, #000);
           @apply(--mdb-coverage-table-body-cell);
         }
         --vaadin-grid-body-row-odd-cell: {
@@ -68,11 +69,12 @@ Custom property | Description | Default
         flex-wrap: nowrap;
         flex-direction: row;
         justify-content: space-between;
-        border-top: 1px solid #ebeff4;
-        border-bottom: 1px solid #ebeff4;
+        border-top: 1px solid var(--mdb-border-color, #000);
+        border-bottom: 1px solid var(--mdb-border-color, #000);
         padding-top: var(--mdb-coverage-table-options-padding, 10px);
         padding-bottom: var(--mdb-coverage-table-options-padding, 10px);
-        @apply(--mdb-coverage-table-options)
+        color: var(--mdb-primary-text-dark, #000);
+        @apply(--mdb-coverage-table-options);
       }
 
        :host mdb-radio-list {
@@ -91,7 +93,7 @@ Custom property | Description | Default
       }
 
        :host .selected {
-        background-color: #f3f6fb;
+        background-color: var(--mdb-accent-color-background, #f3f6fb);
       }
 
        :host .title-row {
