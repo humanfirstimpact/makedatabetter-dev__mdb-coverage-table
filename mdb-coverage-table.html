@@ -212,10 +212,10 @@ Custom property | Description | Default
       </div>
     </div>
     <vaadin-grid items="{{items}}">
-      <template is="dom-repeat" items="{{columns}}" as="column">
+      <template is="dom-repeat" items="{{columns}}" as="column" index-as="colIndex">
         <vaadin-grid-column>
           <template class="header">
-            <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.property)]] mdb-cell" path="[[column.property]]">
+            <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.id)]] mdb-cell" path="[[column.id]]">
               <div class="column-status">
                 <span>
                   <template is="dom-if" if="[[column.identified]]">
@@ -224,22 +224,22 @@ Custom property | Description | Default
                 </span>
                 <span>
                   <template is="dom-if" if="[[!column.flagged]]">
-                    <iron-icon icon="icons:flag" class="flag" on-tap="_openModal" column$="[[column.name]]" title="Flag [[column.name]]"></iron-icon>
+                    <iron-icon icon="icons:flag" class="flag" on-tap="_openModal" column$="[[column.label]]" title="Flag [[column.label]]"></iron-icon>
                   </template>
                   
                   <template is="dom-if" if="[[column.flagged]]">
-                    <iron-icon icon="icons:flag" class="flag flagged" on-tap="_openModal" column$="[[column.name]]" title="[[column.name]] flagged in [[column.flaggedIn]]"></iron-icon>
+                    <iron-icon icon="icons:flag" class="flag flagged" on-tap="_openModal" column$="[[column.label]]" title="[[column.label]] flagged in [[column.flaggedIn]]"></iron-icon>
                   </template>
                 </span>
               </div>
               <div>
-                [[column.name]]
+                [[column.label]]
               </div>
             </mdb-vaadin-grid-column-selector>
           </template>
           <template>
-            <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.property)]] mdb-cell" path="[[column.property]]">
-              [[_getPropertyValue(item, column.property)]]
+            <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.id)]] mdb-cell" path="[[column.id]]">
+              [[_getColValue(item, colIndex)]]
             </mdb-vaadin-grid-column-selector>
           </template>
         </vaadin-grid-column>
@@ -312,16 +312,14 @@ Custom property | Description | Default
         'select-column': '_selectedChanged'
       },
 
-      _getPropertyValue: function (item, prop) {
-        return item ? item[prop] : '';
-      },
-
       _selectedChanged: function (e, args) {
-        this.selectedColumn = args.path;
+        this.set('selectedColumn', this.columns.find(function (e) {
+          return e.id === args.path;
+        }));
       },
 
       _isSelected: function (selected, current) {
-        return (selected === current ? 'selected' : '');
+        return (selected.id === current ? 'selected' : '');
       },
 
       _openModal: function (e) {
@@ -370,6 +368,10 @@ Custom property | Description | Default
 
       _isModalOpen: function (open) {
         return open;
+      },
+
+      _getColValue: function (arr, index) {
+        return (arr || [])[index] || '';
       }
 
     });
