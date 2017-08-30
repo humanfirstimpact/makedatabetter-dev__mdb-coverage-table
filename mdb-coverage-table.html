@@ -190,11 +190,13 @@ Custom property | Description | Default
     </style>
     <div class="title-row">
       <mdb-title help-text="{{helpText}}" level="2">{{titleText}}</mdb-title>
-      <div class="title-row-icons">
-        <div class="indicator-icon"></div>
-        <div class="indicator-icon orange"></div>
-        <iron-icon icon="icons:lock-open"></iron-icon>
-      </div>
+      <template is="dom-if" if="[[showScrambledDataIcons]]">
+        <div class="title-row-icons">
+          <div class="indicator-icon"></div>
+          <div class="indicator-icon orange"></div>
+          <iron-icon icon="icons:lock-open"></iron-icon>
+        </div>
+      </template>
     </div>
     <div class="table-options">
       <div class="column-options">
@@ -303,6 +305,12 @@ Custom property | Description | Default
         lobs: {
           type: Array,
           value: []
+        },
+
+        showScrambledDataIcons: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
         },
 
         _modalOpen: {
