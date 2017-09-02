@@ -6,7 +6,7 @@
     "mdb-radio-list": "git://github.com/makedatabetter-dev/mdb-radio-list.git",
     "mdb-title": "git://github.com/makedatabetter-dev/mdb-title.git",
     "mdb-help-text": "git://github.com/makedatabetter-dev/mdb-help-text.git",
-    "vaadin-grid": "vaadin/vaadin-grid#^2.0.1",
+    "atom-table": "git://github.com/makedatabetter-dev/atom-table.git",
     "paper-dialog": "PolymerElements/paper-dialog#^2.0.0"
   },
   "devDependencies": {
@@ -14,5 +14,8 @@
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "resolutions": {
+    "paper-icon-button": "^1.0.0"
   }
 }

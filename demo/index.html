@@ -1,32 +1,74 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>mdb-coverage-table demo</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <title>mdb-coverage-table demo</title>
 
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../mdb-coverage-table.html">
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <style is="custom-style" include="demo-pages-shared-styles">
-    </style>
-  </head>
-  <body>
-    <div>
-      <h3>Basic mdb-coverage-table demo</h3>
-      <demo-snippet>
-        <template>
-          <mdb-coverage-table 
-              title-text="PARTY_SALES" 
-              help-text="Coverage table" 
-              columns='[{"name":"Name (Job title)","property":"name","width":"400"},{"name":"New Age","property":"age","width":"150"},{"name":"Nickname","property":"nickname","width":"150"},{"name":"Employee","property":"employee","width":"150"},{"name":"Col1","property":"col1","width":"100"},{"name":"Col2","property":"col2","width":"100"},{"name":"Col3","property":"col3","width":"100"},{"name":"Col4","property":"col4","width":"100"},{"name":"Col5","property":"col5","width":"100"},{"name":"Col6","property":"col6","width":"100"}]' 
-              items='[{"name": "John", "surname": "Lennon", "role": "singer","age":23}, {"name": "Ringo", "surname": "Starr", "role": "drums","age":25}]'></mdb-coverage-table>
-        </template>
-      </demo-snippet>
-    </div>
-  </body>
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../mdb-coverage-table.html">
+
+  <style is="custom-style" include="demo-pages-shared-styles">
+
+  </style>
+</head>
+
+<body>
+  <div>
+    <h3>Basic mdb-coverage-table demo</h3>
+    <demo-snippet>
+      <template>
+        <mdb-coverage-table title-text="PARTY_SALES" help-text="Coverage table" columns='[{"assessment": "Y","id": "8090134921931341166","label": "ContactName","relevance": 100},{"assessment": "M","id": "623551421600905862","label": "ContactTitle","relevance": 99}]'
+          items='[
+          [
+              "Lars Peterson",
+              "Order Administrator"
+          ],
+          [
+              "Ian Devling",
+              "Sales Representative"
+          ],
+          [
+              "Guylène Nodier",
+              "Marketing Manager"
+          ],
+          [
+              "Carlos Diaz",
+              "Coordinator Foreign Markets"
+          ],
+          [
+              "Charlotte Cooper",
+              "Purchasing Manager"
+          ],
+          [
+              "Mayumi Ohno",
+              "Export Administrator"
+          ],
+          [
+              "Yoshi Nagase",
+              "Sales Agent"
+          ],
+          [
+              "Sven Petersen",
+              "Marketing Representative"
+          ],
+          [
+              "Antonio del Valle Saavedra",
+              "International Marketing Mgr."
+          ],
+          [
+              "Regina Murphy",
+              "Sales Manager"
+          ]
+      ]'></mdb-coverage-table>
+      </template>
+    </demo-snippet>
+  </div>
+</body>
+
 </html>
