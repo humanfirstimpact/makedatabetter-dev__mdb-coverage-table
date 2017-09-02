@@ -5,8 +5,7 @@
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
-<link rel="import" href="../vaadin-grid/vaadin-grid.html">
-<link rel="import" href="../vaadin-grid/vaadin-grid-sorter.html">
+<link rel="import" href="../atom-table/atom-table.html">
 <link rel="import" href="../mdb-title/mdb-title.html">
 <link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
 <link rel="import" href="./mdb-vaadin-grid-column-selector.html">
@@ -39,17 +38,17 @@ Custom property | Description | Default
        :host {
         display: block;
         @apply(--paper-font-common-base);
-        --vaadin-grid-cell: {
+        --atom-table-cell: {
           padding: 0;
         }
-        --vaadin-grid-header-cell: {
+        --atom-table-header-cell: {
           @apply(--mdb-coverage-table-header-cell);
         }
-        --vaadin-grid-body-cell: {
+        --atom-table-body-cell: {
           color: var(--mdb-primary-text-dark, #000);
           @apply(--mdb-coverage-table-body-cell);
         }
-        --vaadin-grid-body-row-odd-cell: {
+        --atom-table-body-row-odd-cell: {
           @apply(--mdb-coverage-table-odd-row-cell);
         }
       }
@@ -62,9 +61,11 @@ Custom property | Description | Default
         display: inline-block;
       }
 
-       :host vaadin-grid {
+       :host atom-table {
         @apply(--paper-font-common-base);
-        @apply(--mdb-coverage-table);
+        --atom-table: {
+          @apply(--mdb-coverage-table);
+        }
       }
 
        :host .table-options {
@@ -216,7 +217,7 @@ Custom property | Description | Default
         </mdb-radio-list>
       </div>
     </div>
-    <vaadin-grid items="{{items}}">
+    <atom-table items="{{items}}">
       <template is="dom-repeat" items="{{columns}}" as="column" index-as="colIndex">
         <vaadin-grid-column hidden="[[_columnHidden(column,columnsShown)]]">
           <template class="header">
@@ -249,7 +250,7 @@ Custom property | Description | Default
           </template>
         </vaadin-grid-column>
       </template>
-    </vaadin-grid>
+    </atom-table>
     <template is="dom-if" if="[[_isModalOpen(_modalOpen)]]">
       <div id="overlay" on-tap="_closeModal">
       </div>
