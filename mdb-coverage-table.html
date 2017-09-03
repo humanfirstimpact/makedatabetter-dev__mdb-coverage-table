@@ -230,11 +230,11 @@ Custom property | Description | Default
                 </span>
                 <span>
                   <template is="dom-if" if="[[!column.flagged]]">
-                    <iron-icon icon="icons:flag" class="flag" on-tap="_openModal" column$="[[column.label]]" title="Flag [[column.label]]"></iron-icon>
+                    <iron-icon icon="icons:flag" class="flag" on-tap="_openModal" column$="[[column.id]]" title="Flag [[column.label]]"></iron-icon>
                   </template>
                   
                   <template is="dom-if" if="[[column.flagged]]">
-                    <iron-icon icon="icons:flag" class="flag flagged" on-tap="_openModal" column$="[[column.label]]" title="[[column.label]] flagged in [[column.flaggedIn]]"></iron-icon>
+                    <iron-icon icon="icons:flag" class="flag flagged" on-tap="_openModal" column$="[[column.id]]" title="[[column.label]] flagged in [[column.flaggedIn]]"></iron-icon>
                   </template>
                 </span>
               </div>
@@ -256,11 +256,11 @@ Custom property | Description | Default
       </div>
     </template>
     <paper-dialog id="modal">
-      <h3>Select LOB to flag {{selectedColumn}} in</h3>
+      <h3>Select LOB to flag {{selectedColumn.label}} in</h3>
       <div id="radio-list">
         <paper-radio-group>
           <template is="dom-repeat" items="[[lobs]]">
-            <paper-radio-button name="[[item]]">[[item]]</paper-radio-button>
+            <paper-radio-button name="[[item.id]]">[[item.label]]</paper-radio-button>
           </template>
         </paper-radio-group>
       </div>
@@ -347,8 +347,8 @@ Custom property | Description | Default
       },
 
       _openModal: function (e) {
-        var name = e.currentTarget.attributes.getNamedItem('column').value,
-          column = this.columns.find(function (e) { return name === e.name; });
+        var id = e.currentTarget.attributes.getNamedItem('column').value,
+          column = this.columns.find(function (e) { return id === e.id; });
 
         if (column) {
           this._modalOpen = true;
@@ -364,7 +364,7 @@ Custom property | Description | Default
       _flag: function () {
         var that = this,
           lob = this.querySelector('#modal paper-radio-group').selected,
-          column = this.columns.find(function (e) { return that.selectedColumn === e.name; }),
+          column = this.columns.find(function (e) { return that.selectedColumn.id === e.id; }),
           index = this.columns.indexOf(column);
 
         this.set('columns.' + index + '.flagged', true);
@@ -375,7 +375,7 @@ Custom property | Description | Default
 
       _unflag: function () {
         var that = this,
-          column = this.columns.find(function (e) { return that.selectedColumn === e.name; }),
+          column = this.columns.find(function (e) { return that.selectedColumn.id === e.id; }),
           index = this.columns.indexOf(column);
 
         this.set('columns.' + index + '.flagged', false);
