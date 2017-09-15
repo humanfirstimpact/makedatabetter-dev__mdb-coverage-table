@@ -295,7 +295,8 @@ Custom property | Description | Default
         columnsShown: {
           type: String,
           value: 'recommended',
-          reflectToAttribute: true
+          reflectToAttribute: true,
+          observer: '_columnsShownRecAll'
         },
 
         columnsSortBy: {
@@ -334,6 +335,10 @@ Custom property | Description | Default
 
       listeners: {
         'select-column': '_selectedChanged'
+      },
+
+      _columnsShownRecAll: function () {
+          this.fire('columnsShownRecAll', {"columnsShownRecAll": this.columnsShown});
       },
 
       _selectedChanged: function (e, args) {
