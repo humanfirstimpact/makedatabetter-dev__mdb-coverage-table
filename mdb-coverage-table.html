@@ -338,7 +338,7 @@ Custom property | Description | Default
       },
 
       _columnsShownRecAll: function () {
-          this.fire('columnsShownRecAll', {"columnsShownRecAll": this.columnsShown});
+        this.fire('show-columns', { "type": this.columnsShown });
       },
 
       _selectedChanged: function (e, args) {
