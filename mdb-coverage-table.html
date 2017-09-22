@@ -218,7 +218,7 @@ Custom property | Description | Default
         </mdb-radio-list>
       </div>
     </div>
-    <atom-table items="{{items}}">
+    <atom-table items="{{items}}" allow-column-paging="true">
       <template is="dom-repeat" items="{{columns}}" as="column" index-as="colIndex">
         <vaadin-grid-column hidden="[[_columnHidden(column,columnsShown)]]">
           <template class="header">
