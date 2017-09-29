@@ -218,7 +218,7 @@ Custom property | Description | Default
         </mdb-radio-list>
       </div>
     </div>
-    <atom-table items="{{items}}">
+    <atom-table items="{{items}}" allow-column-paging column-page-size="{{columnPageSize}}" column-page-num="{{columnPageNum}}" total-columns="[[totalColumns]]">
       <template is="dom-repeat" items="{{columns}}" as="column" index-as="colIndex">
         <vaadin-grid-column hidden="[[_columnHidden(column,columnsShown)]]">
           <template class="header">
@@ -293,6 +293,23 @@ Custom property | Description | Default
           value: []
         },
 
+        columnPageSize: {
+          type: Number,
+          value: 3,
+          notify: true
+        },
+
+        columnPageNum: {
+          type: Number,
+          value: 1,
+          notify: true
+        },
+
+        totalColumns: {
+          type: Number,
+          value: 0
+        },
+
         columnsShown: {
           type: String,
           value: 'recommended',
@@ -333,6 +350,10 @@ Custom property | Description | Default
           value: false
         }
       },
+
+      observers: [
+        '_refreshColumns(columnPageSize, columnPageNum)'
+      ],
 
       listeners: {
         'select-column': '_selectedChanged'
@@ -410,6 +431,13 @@ Custom property | Description | Default
         } else {
           return false;
         }
+      },
+
+      _refreshColumns: function (psize, pnum) {
+        this.fire('refresh-columns', {
+          psize: psize,
+          pnum: pnum
+        });
       }
 
     });
