@@ -220,7 +220,7 @@ Custom property | Description | Default
     </div>
     <atom-table items="{{items}}" allow-column-paging column-page-size="{{columnPageSize}}" column-page-num="{{columnPageNum}}" total-columns="[[totalColumns]]">
       <template is="dom-repeat" items="{{columns}}" as="column" index-as="colIndex">
-        <vaadin-grid-column hidden="[[_columnHidden(column,columnsShown)]]">
+        <vaadin-grid-column>
           <template class="header">
             <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.id)]] mdb-cell" path="[[column.id]]">
               <div class="column-status">
@@ -423,14 +423,6 @@ Custom property | Description | Default
 
       _getColValue: function (arr, index) {
         return (arr || [])[index] || '';
-      },
-
-      _columnHidden: function (col) {
-        if (col) {
-          return this.columnsShown.toLowerCase() === 'recommended' ? !col.relevance : false;
-        } else {
-          return false;
-        }
       },
 
       _refreshColumns: function (psize, pnum) {
