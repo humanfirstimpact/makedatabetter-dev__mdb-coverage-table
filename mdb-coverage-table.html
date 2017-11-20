@@ -124,8 +124,12 @@ Custom property | Description | Default
         color: #aaa;
       }
 
-       :host iron-icon.column-identified {
+       :host iron-icon.column-accepted {
         color: #5bca52;
+      }
+
+      :host iron-icon.column-rejected {
+        color: red;
       }
 
        :host .column-status {
@@ -225,8 +229,13 @@ Custom property | Description | Default
             <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.id)]] mdb-cell" path="[[column.id]]">
               <div class="column-status">
                 <span>
-                  <template is="dom-if" if="[[column.identified]]">
-                    <iron-icon class="column-identified" icon="icons:check-circle"></iron-icon>
+                  <template is="dom-if" if="[[_isColumnAccepted(column)]]">
+                    <iron-icon class="column-accepted" icon="icons:check-circle"></iron-icon>
+                  </template>
+                </span>
+                <span>
+                  <template is="dom-if" if="[[_isColumnRejected(column)]]">
+                    <iron-icon class="column-rejected" icon="icons:clear"></iron-icon>
                   </template>
                 </span>
                 <span>
@@ -371,6 +380,14 @@ Custom property | Description | Default
 
       _isSelected: function (selected, current) {
         return (selected.id === current ? 'selected' : '');
+      },
+
+      _isColumnAccepted: function(column){
+        return (column.assessment || 'n').toLowerCase() == 'y';
+      },
+
+      _isColumnRejected: function(column){
+        return (column.assessment || 'n').toLowerCase() == 'n';
       },
 
       _openModal: function (e) {
