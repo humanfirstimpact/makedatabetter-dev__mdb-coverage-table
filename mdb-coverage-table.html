@@ -35,7 +35,7 @@ Custom property | Description | Default
 <dom-module id="mdb-coverage-table">
   <template>
     <style>
-       :host {
+      :host {
         display: block;
         @apply(--paper-font-common-base);
         --atom-table-cell: {
@@ -51,24 +51,32 @@ Custom property | Description | Default
         --atom-table-body-row-odd-cell: {
           @apply(--mdb-coverage-table-odd-row-cell);
         }
+        --mdb-search-box-container:{
+          margin: 0;
+        }
       }
-
-       :host mdb-title {
+      :host mdb-search-box {
+          flex: 0 1 40%;
+      }
+      :host mdb-search-box paper-icon-button {
+          color: var(--coverage-table-button-color,#464646);
+      }
+      :host mdb-title {
         @apply(--mdb-coverage-table-title);
       }
 
-       :host mdb-radio-list {
+      :host mdb-radio-list {
         display: inline-block;
       }
 
-       :host atom-table {
+      :host atom-table {
         @apply(--paper-font-common-base);
         --atom-table: {
           @apply(--mdb-coverage-table);
         }
       }
 
-       :host .table-options {
+      :host .table-options {
         display: flex;
         flex-wrap: nowrap;
         flex-direction: row;
@@ -81,32 +89,35 @@ Custom property | Description | Default
         @apply(--mdb-coverage-table-options);
       }
 
-       :host mdb-radio-list {
+      :host mdb-radio-list {
         @apply(--mdb-coverage-table-radio-list);
       }
 
-       :host mdb-vaadin-grid-column-selector {
+      :host mdb-vaadin-grid-column-selector {
         padding: 8px;
         box-sizing: border-box;
       }
 
-       :host .mdb-cell {
+      :host .mdb-cell {
         padding: 8px;
         width: 100%;
         @apply(--mdb-coverage-table-cell);
         min-height: 100%;
       }
 
-       :host .selected {
+      :host .selected {
         background-color: var(--mdb-accent-color-background, #f3f6fb);
       }
 
-       :host .title-row {
-        display: flex;
-        justify-content: space-between;
+      :host .title-row {
+        @apply(--layout-horizontal);
+        @apply(--layout-end);
+        @apply(--layout-justified);
+
+        padding: 0 0 10px 0;
       }
 
-       :host .indicator-icon {
+      :host .indicator-icon {
         display: inline-block;
         background-color: #aaa;
         height: 13px;
@@ -116,15 +127,15 @@ Custom property | Description | Default
         border-radius: 50%;
       }
 
-       :host .indicator-icon.orange {
+      :host .indicator-icon.orange {
         background-color: orange;
       }
 
-       :host iron-icon {
+      :host iron-icon {
         color: #aaa;
       }
 
-       :host iron-icon.column-accepted {
+      :host iron-icon.column-accepted {
         color: #5bca52;
       }
 
@@ -132,38 +143,38 @@ Custom property | Description | Default
         color: red;
       }
 
-       :host .column-status {
+      :host .column-status {
         padding: 5px;
         display: flex;
         justify-content: flex-end;
       }
 
-       :host .column-status>* {
+      :host .column-status>* {
         flex: 1;
       }
 
-       :host .column-status .flag {
+      :host .column-status .flag {
         cursor: pointer;
       }
 
-       :host .column-status .flagged {
+      :host .column-status .flagged {
         color: orange;
       }
 
-       :host #modal #radio-list {
+      :host #modal #radio-list {
         overflow: auto;
       }
 
-       :host #modal paper-radio-button {
+      :host #modal paper-radio-button {
         display: block;
       }
 
-       :host #modal #buttons {
+      :host #modal #buttons {
         display: flex;
         justify-content: flex-end;
       }
 
-       :host #modal paper-button {
+      :host #modal paper-button {
         --paper-button: {
           vertical-align: text-bottom;
           color: #5caadb;
@@ -171,7 +182,7 @@ Custom property | Description | Default
         }
       }
 
-       :host #overlay {
+      :host #overlay {
         position: fixed;
         top: 0;
         left: 0;
@@ -182,11 +193,11 @@ Custom property | Description | Default
         z-index: 100;
       }
 
-       :host .title-row-icons iron-icon {
+      :host .title-row-icons iron-icon {
         color: #5caadb;
       }
 
-       :host .title-row-icons mdb-help-text {
+      :host .title-row-icons mdb-help-text {
         --mdb-help-icon: {
           color: #5caadb;
           height: 24px;
@@ -203,6 +214,9 @@ Custom property | Description | Default
           <iron-icon icon="icons:lock-open"></iron-icon>
         </div>
       </template>
+      <mdb-search-box label=" ">
+          <paper-icon-button  icon="search" name="search" suffix>ALL</paper-icon-button>
+      </mdb-search-box>
     </div>
     <div class="table-options">
       <div class="column-options">
@@ -222,7 +236,8 @@ Custom property | Description | Default
         </mdb-radio-list>
       </div>
     </div>
-    <atom-table items="{{items}}" allow-column-paging column-page-size="{{columnPageSize}}" column-page-num="{{columnPageNum}}" total-columns="[[totalColumns]]">
+    <atom-table items="{{items}}" allow-column-paging column-page-size="{{columnPageSize}}" column-page-num="{{columnPageNum}}"
+      total-columns="[[totalColumns]]">
       <template is="dom-repeat" items="{{columns}}" as="column" index-as="colIndex">
         <vaadin-grid-column>
           <template class="header">
@@ -242,7 +257,7 @@ Custom property | Description | Default
                   <template is="dom-if" if="[[!column.flagged]]">
                     <iron-icon icon="icons:flag" class="flag" on-tap="_openModal" column$="[[column.id]]" title="Flag [[column.label]]"></iron-icon>
                   </template>
-                  
+
                   <template is="dom-if" if="[[column.flagged]]">
                     <iron-icon icon="icons:flag" class="flag flagged" on-tap="_openModal" column$="[[column.id]]" title="[[column.label]] flagged in [[column.flaggedIn]]"></iron-icon>
                   </template>
@@ -328,7 +343,7 @@ Custom property | Description | Default
 
         columnsSortBy: {
           type: String,
-          value: 'none',
+          value: 'relevance',
           reflectToAttribute: true,
         },
 
@@ -382,11 +397,11 @@ Custom property | Description | Default
         return (selected.id === current ? 'selected' : '');
       },
 
-      _isColumnAccepted: function(column){
+      _isColumnAccepted: function (column) {
         return (column.assessment || 'n').toLowerCase() == 'y';
       },
 
-      _isColumnRejected: function(column){
+      _isColumnRejected: function (column) {
         return (column.assessment || 'n').toLowerCase() == 'n';
       },
 
