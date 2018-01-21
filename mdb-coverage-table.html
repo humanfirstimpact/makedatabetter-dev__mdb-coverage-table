@@ -51,16 +51,19 @@ Custom property | Description | Default
         --atom-table-body-row-odd-cell: {
           @apply(--mdb-coverage-table-odd-row-cell);
         }
-        --mdb-search-box-container:{
+        --mdb-search-box-container: {
           margin: 0;
         }
       }
+
       :host mdb-search-box {
-          flex: 0 1 40%;
+        flex: 0 1 40%;
       }
+
       :host mdb-search-box paper-icon-button {
-          color: var(--coverage-table-button-color,#464646);
+        color: var(--coverage-table-button-color, #464646);
       }
+
       :host mdb-title {
         @apply(--mdb-coverage-table-title);
       }
@@ -161,7 +164,7 @@ Custom property | Description | Default
         color: orange;
       }
 
-      :host #modal #radio-list {
+      /* :host #modal #radio-list {
         overflow: auto;
       }
 
@@ -172,12 +175,52 @@ Custom property | Description | Default
       :host #modal #buttons {
         display: flex;
         justify-content: flex-end;
+      } */
+
+      :host .modalContainer>* {
+        margin: 12px;
+        --mdb-title: {
+          color: inherit;
+        }
+      }
+
+      :host .modalContainer {
+        padding: 12px;
+      }
+
+      :host .modalContainer,
+      :host #modal #radio-list {
+        margin: 0;
+        color: var(--mdb-disabled-text-dark);
+        min-width: 300px;
+      }
+
+      :host .modalContainer .special-text {
+        color: var(--mdb-primary-text-dark);
+      }
+
+      :host #modal .flex {
+        @apply(--layout-flex);
+      }
+
+      :host #modal .help-title {
+        margin-bottom: 0;
+      }
+
+      :host #modal paper-radio-button {
+        display: block;
+      }
+
+      :host #modal #buttons {
+        @apply(--layout-horizontal);
+        border-top: 1px solid var(--mdb-border-color);
+        padding: 8px 0;
+        margin: 0;
       }
 
       :host #modal paper-button {
         --paper-button: {
-          vertical-align: text-bottom;
-          color: #5caadb;
+          color: var(--mdb-link-color);
           font-weight: 600;
         }
       }
@@ -215,7 +258,7 @@ Custom property | Description | Default
         </div>
       </template>
       <mdb-search-box label=" ">
-          <paper-icon-button  icon="search" name="search" suffix>ALL</paper-icon-button>
+        <paper-icon-button icon="search" name="search" suffix>ALL</paper-icon-button>
       </mdb-search-box>
     </div>
     <div class="table-options">
@@ -281,16 +324,24 @@ Custom property | Description | Default
       </div>
     </template>
     <paper-dialog id="modal">
-      <h3>Select LOB to flag {{selectedColumn.label}} in</h3>
-      <div id="radio-list">
-        <paper-radio-group>
-          <template is="dom-repeat" items="[[lobs]]">
-            <paper-radio-button name="[[item.id]]">[[item.label]]</paper-radio-button>
-          </template>
-        </paper-radio-group>
+      <div class="modalContainer">
+        <mdb-title level="2">Flag column
+          <span class="special-text">[[proposedConcept]]</span> as</mdb-title>
+        <mdb-title class="help-title" level="4" help-text="this is proposed concept">Propesed Concept</mdb-title>
+        <mdb-search-box label=" " filter="{{proposedConcept}}" placeholder="Enter Concept"></mdb-search-box>
+        <mdb-title class="help-title" level="3">LOB</mdb-title>
+        <div id="radio-list">
+          <paper-radio-group>
+            <template is="dom-repeat" items="[[lobs]]">
+              <paper-radio-button name="[[item.id]]">[[item.label]]</paper-radio-button>
+            </template>
+          </paper-radio-group>
+        </div>
       </div>
+
       <div id="buttons">
         <paper-button id="unflag" on-tap="_unflag">Unflag</paper-button>
+        <span class="flex"></span>
         <paper-button id="cancel" on-tap="_closeModal">Cancel</paper-button>
         <paper-button id="flag" on-tap="_flag">Flag</paper-button>
       </div>
