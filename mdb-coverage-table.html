@@ -37,7 +37,7 @@ Custom property | Description | Default
     <style>
       :host {
         display: block;
-        @apply(--paper-font-common-base);
+        color: var(--mdb-secondary-text-dark);
         --atom-table-cell: {
           padding: 0;
         }
@@ -56,8 +56,20 @@ Custom property | Description | Default
         }
       }
 
-      :host mdb-search-box {
+      :host .header-search-box {
         flex: 0 1 40%;
+      }
+
+      :host #modal .modal-search-box {
+        margin-top: 0;
+      }
+
+      #modal paper-radio-button {
+        opacity: 0.6;
+      }
+
+      #modal paper-radio-button[aria-checked="true"] {
+        opacity: 1;
       }
 
       :host mdb-search-box paper-icon-button {
@@ -88,8 +100,11 @@ Custom property | Description | Default
         border-bottom: 1px solid var(--mdb-border-color, #000);
         padding-top: var(--mdb-coverage-table-options-padding, 10px);
         padding-bottom: var(--mdb-coverage-table-options-padding, 10px);
-        color: var(--mdb-primary-text-dark, #000);
         @apply(--mdb-coverage-table-options);
+
+        --paper-radio-button: {
+          color: inherit;
+        }
       }
 
       :host mdb-radio-list {
@@ -136,6 +151,8 @@ Custom property | Description | Default
 
       :host iron-icon {
         color: #aaa;
+        width: 16px;
+        height: 16px;
       }
 
       :host iron-icon.column-accepted {
@@ -148,12 +165,11 @@ Custom property | Description | Default
 
       :host .column-status {
         padding: 5px;
-        display: flex;
-        justify-content: flex-end;
+        @apply(--layout-horizontal);
       }
 
       :host .column-status>* {
-        flex: 1;
+        flex: 0 0 20%
       }
 
       :host .column-status .flag {
@@ -163,19 +179,6 @@ Custom property | Description | Default
       :host .column-status .flagged {
         color: orange;
       }
-
-      /* :host #modal #radio-list {
-        overflow: auto;
-      }
-
-      :host #modal paper-radio-button {
-        display: block;
-      }
-
-      :host #modal #buttons {
-        display: flex;
-        justify-content: flex-end;
-      } */
 
       :host .modalContainer>* {
         margin: 12px;
@@ -249,7 +252,7 @@ Custom property | Description | Default
       }
     </style>
     <div class="title-row">
-      <mdb-title help-text="{{helpText}}" level="2">{{titleText}}</mdb-title>
+      <mdb-title help-text="{{helpText}}" level="3">{{titleText}}</mdb-title>
       <template is="dom-if" if="[[showScrambledDataIcons]]">
         <div class="title-row-icons">
           <div class="indicator-icon"></div>
@@ -257,7 +260,7 @@ Custom property | Description | Default
           <iron-icon icon="icons:lock-open"></iron-icon>
         </div>
       </template>
-      <mdb-search-box label=" ">
+      <mdb-search-box label=" " class="header-search-box">
         <paper-icon-button icon="search" name="search" suffix>ALL</paper-icon-button>
       </mdb-search-box>
     </div>
@@ -286,25 +289,25 @@ Custom property | Description | Default
           <template class="header">
             <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.id)]] mdb-cell" path="[[column.id]]">
               <div class="column-status">
-                <span>
-                  <template is="dom-if" if="[[_isColumnAccepted(column)]]">
-                    <iron-icon class="column-accepted" icon="icons:check-circle"></iron-icon>
-                  </template>
-                </span>
-                <span>
-                  <template is="dom-if" if="[[_isColumnRejected(column)]]">
-                    <iron-icon class="column-rejected" icon="icons:clear"></iron-icon>
-                  </template>
-                </span>
-                <span>
-                  <template is="dom-if" if="[[!column.flagged]]">
-                    <iron-icon icon="icons:flag" class="flag" on-tap="_openModal" column$="[[column.id]]" title="Flag [[column.label]]"></iron-icon>
-                  </template>
 
-                  <template is="dom-if" if="[[column.flagged]]">
-                    <iron-icon icon="icons:flag" class="flag flagged" on-tap="_openModal" column$="[[column.id]]" title="[[column.label]] flagged in [[column.flaggedIn]]"></iron-icon>
-                  </template>
-                </span>
+                <template is="dom-if" if="[[_isColumnAccepted(column)]]">
+                  <iron-icon class="column-accepted" icon="icons:check-circle"></iron-icon>
+                </template>
+
+
+                <template is="dom-if" if="[[_isColumnRejected(column)]]">
+                  <iron-icon class="column-rejected" icon="icons:cancel"></iron-icon>
+                </template>
+
+
+                <template is="dom-if" if="[[!column.flagged]]">
+                  <iron-icon icon="icons:flag" class="flag" on-tap="_openModal" column$="[[column.id]]" title="Flag [[column.label]]"></iron-icon>
+                </template>
+
+                <template is="dom-if" if="[[column.flagged]]">
+                  <iron-icon icon="icons:flag" class="flag flagged" on-tap="_openModal" column$="[[column.id]]" title="[[column.label]] flagged in [[column.flaggedIn]]"></iron-icon>
+                </template>
+
               </div>
               <div>
                 [[column.label]]
@@ -326,9 +329,9 @@ Custom property | Description | Default
     <paper-dialog id="modal">
       <div class="modalContainer">
         <mdb-title level="2">Flag column
-          <span class="special-text">[[proposedConcept]]</span> as</mdb-title>
-        <mdb-title class="help-title" level="4" help-text="this is proposed concept">Propesed Concept</mdb-title>
-        <mdb-search-box label=" " filter="{{proposedConcept}}" placeholder="Enter Concept"></mdb-search-box>
+          <span class="special-text">[[selectedColumn.label]]</span> as</mdb-title>
+        <mdb-title class="help-title" level="4" help-text="this is proposed concept">Proposed Concept</mdb-title>
+        <mdb-search-box class="modal-search-box" label=" " filter="{{selectedColumn.label}}" placeholder="Enter Concept"></mdb-search-box>
         <mdb-title class="help-title" level="3">LOB</mdb-title>
         <div id="radio-list">
           <paper-radio-group>
