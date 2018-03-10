@@ -452,11 +452,11 @@ Custom property | Description | Default
       },
 
       _isColumnAccepted: function (column) {
-        return (column.assessment || 'n').toLowerCase() == 'y';
+        return (column.assessment || '').toLowerCase() == 'y';
       },
 
       _isColumnRejected: function (column) {
-        return (column.assessment || 'n').toLowerCase() == 'n';
+        return (column.assessment || '').toLowerCase() == 'n';
       },
 
       _openModal: function (e) {
