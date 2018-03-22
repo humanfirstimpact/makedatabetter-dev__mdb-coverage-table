@@ -448,7 +448,7 @@ Custom property | Description | Default
       },
 
       _isSelected: function (selected, current) {
-        return (selected.id === current ? 'selected' : '');
+        return ((selected || {}).id === current ? 'selected' : '');
       },
 
       _isColumnAccepted: function (column) {
