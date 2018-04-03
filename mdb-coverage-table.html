@@ -473,7 +473,10 @@ Custom property | Description | Default
 
           var radioGroup = this.querySelector('#modal paper-radio-group');
           if (radioGroup) {
-            radioGroup.selected = column.flaggedIn;
+            if(column.flaggedIn)
+              radioGroup.selected = column.lobId;
+            else if((this.lobs || []).length > 0)
+              radioGroup.selected = this.lobs[0].id;
           }
         }
       },
