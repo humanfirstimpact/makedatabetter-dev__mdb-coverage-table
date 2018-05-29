@@ -293,12 +293,12 @@ Custom property | Description | Default
             <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.id)]] mdb-cell" path="[[column.id]]">
               <div class="column-status">
 
-                <template is="dom-if" if="[[_isColumnAccepted(column)]]">
+                <template is="dom-if" if="[[_isColumnAccepted(column.assessment)]]">
                   <iron-icon class="column-accepted" icon="icons:check-circle"></iron-icon>
                 </template>
 
 
-                <template is="dom-if" if="[[_isColumnRejected(column)]]">
+                <template is="dom-if" if="[[_isColumnRejected(column.assessment)]]">
                   <iron-icon class="column-rejected" icon="icons:cancel"></iron-icon>
                 </template>
 
@@ -455,12 +455,12 @@ Custom property | Description | Default
         return ((selected || {}).id === current ? 'selected' : '');
       },
 
-      _isColumnAccepted: function (column) {
-        return (column.assessment || '').toLowerCase() == 'y';
+      _isColumnAccepted: function (assessment) {
+        return (assessment || '').toLowerCase() == 'y';
       },
 
-      _isColumnRejected: function (column) {
-        return (column.assessment || '').toLowerCase() == 'n';
+      _isColumnRejected: function (assessment) {
+        return (assessment || '').toLowerCase() == 'n';
       },
 
       _openModal: function (e) {
