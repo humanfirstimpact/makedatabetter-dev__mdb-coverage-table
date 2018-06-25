@@ -334,7 +334,7 @@ Custom property | Description | Default
         <mdb-title level="2">Flag column
           <span class="special-text">[[selectedColumn.label]]</span> as</mdb-title>
         <mdb-title class="help-title" level="4" help-text="this is proposed concept">Proposed Concept</mdb-title>
-        <mdb-search-box class="modal-search-box" label=" " filter="{{selectedColumn.label}}" placeholder="Enter Concept"></mdb-search-box>
+        <mdb-search-box class="modal-search-box" label=" " filter="{{proposedConceptName}}" placeholder="Enter Concept"></mdb-search-box>
         <mdb-title class="help-title" level="3">LOB</mdb-title>
         <div id="radio-list">
           <paper-radio-group>
@@ -410,6 +410,12 @@ Custom property | Description | Default
           value: []
         },
 
+        selectedConcept:{
+          type: String,
+          reflectToAttribute: true,
+          observer: '_selectedConceptChanged'
+        },
+
         selectedColumn: {
           type: String,
           notify: true,
@@ -430,6 +436,10 @@ Custom property | Description | Default
         _modalOpen: {
           type: Boolean,
           value: false
+        },
+
+        proposedConceptName: {
+          type: String
         }
       },
 
@@ -463,6 +473,11 @@ Custom property | Description | Default
         return (assessment || '').toLowerCase() == 'n';
       },
 
+      _selectedConceptChanged: function(){
+        if(this.selectedConcept)
+          this.set('proposedConceptName', this.selectedConcept.label);
+      },
+
       _openModal: function (e) {
         var id = e.currentTarget.attributes.getNamedItem('column').value,
           column = this.columns.find(function (e) { return id === e.id; });
@@ -489,7 +504,7 @@ Custom property | Description | Default
 
         this.set('columns.' + index + '.flagged', true);
         this.set('columns.' + index + '.flaggedIn', lob);
-        this.fire('flag-column', column);
+        this.fire('flag-column', {proposedConceptName: this.proposedConceptName, column: column});
         this._closeModal();
       },
 
