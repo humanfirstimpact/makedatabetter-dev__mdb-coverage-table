@@ -254,6 +254,11 @@ Custom property | Description | Default
           width: 24px;
         }
       }
+
+      .erroredInput {
+          border: 0.5px solid red;
+          padding: 0.5px;
+      }
     </style>
     <div class="title-row">
       <mdb-title help-text="{{helpText}}" level="3">{{titleText}}</mdb-title>
@@ -335,7 +340,7 @@ Custom property | Description | Default
         <mdb-title level="2">Flag column
           <span class="special-text">[[selectedColumn.label]]</span> as</mdb-title>
         <mdb-title class="help-title" level="4" help-text="this is proposed concept">Proposed Concept</mdb-title>
-        <mdb-search-box class="modal-search-box" label=" " filter="{{proposedConceptName}}" placeholder="Enter Concept"></mdb-search-box>
+        <mdb-search-box id='proposedConcept' class="modal-search-box" label=" " filter="{{proposedConceptName}}" placeholder="Enter Concept" maxlength=199></mdb-search-box>
         <mdb-title class="help-title" level="3">LOB</mdb-title>
         <div id="radio-list">
           <paper-radio-group>
@@ -420,7 +425,8 @@ Custom property | Description | Default
         selectedColumn: {
           type: String,
           notify: true,
-          reflectToAttribute: true
+          reflectToAttribute: true,
+          observer: '_selectedColumnChanged'
         },
 
         lobs: {
@@ -475,8 +481,8 @@ Custom property | Description | Default
       },
 
       _selectedConceptChanged: function(){
-        if(this.selectedConcept)
-          this.set('proposedConceptName', this.selectedConcept.label);
+        // if(this.selectedConcept)
+        //   this.set('proposedConceptName', this.selectedConcept.label);
       },
 
       _openModal: function (e) {
@@ -485,6 +491,8 @@ Custom property | Description | Default
 
         if (column) {
           this._modalOpen = true;
+          this.proposedConceptName = '';
+          this.querySelector('#proposedConcept').classList.remove('erroredInput');
           this.$.modal.open();
 
           var radioGroup = this.querySelector('#modal paper-radio-group');
@@ -498,6 +506,12 @@ Custom property | Description | Default
       },
 
       _flag: function () {
+        if((this.proposedConceptName || '').length == 0){
+          this.querySelector('#proposedConcept').classList.add('erroredInput');
+          return;
+        }else
+          this.querySelector('#proposedConcept').classList.remove('erroredInput');
+        
         var that = this,
           lob = this.querySelector('#modal paper-radio-group').selected,
           column = this.columns.find(function (e) { return that.selectedColumn.id === e.id; }),
@@ -539,6 +553,12 @@ Custom property | Description | Default
           psize: psize,
           pnum: pnum
         });
+      },
+
+      _selectedColumnChanged: function(){
+        var flaggedConceptName = (this.selectedColumn || {}).flaggedConceptName;
+        if((flaggedConceptName || '').length > 0)
+          this.proposedConceptName = flaggedConceptName;
       }
     });
   </script>
