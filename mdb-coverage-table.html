@@ -425,8 +425,7 @@ Custom property | Description | Default
         selectedColumn: {
           type: String,
           notify: true,
-          reflectToAttribute: true,
-          observer: '_selectedColumnChanged'
+          reflectToAttribute: true
         },
 
         lobs: {
@@ -491,7 +490,12 @@ Custom property | Description | Default
 
         if (column) {
           this._modalOpen = true;
-          this.proposedConceptName = '';
+          
+          var flaggedConceptName = column.flaggedConceptName;
+          if((flaggedConceptName || '').length > 0)
+            this.proposedConceptName = flaggedConceptName;
+          else
+            this.proposedConceptName = '';
           this.querySelector('#proposedConcept').classList.remove('erroredInput');
           this.$.modal.open();
 
@@ -553,12 +557,6 @@ Custom property | Description | Default
           psize: psize,
           pnum: pnum
         });
-      },
-
-      _selectedColumnChanged: function(){
-        var flaggedConceptName = (this.selectedColumn || {}).flaggedConceptName;
-        if((flaggedConceptName || '').length > 0)
-          this.proposedConceptName = flaggedConceptName;
       }
     });
   </script>
