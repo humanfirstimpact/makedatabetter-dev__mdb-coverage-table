@@ -340,7 +340,8 @@ Custom property | Description | Default
         <mdb-title level="2">Flag column
           <span class="special-text">[[selectedColumn.label]]</span> as</mdb-title>
         <mdb-title class="help-title" level="4" help-text="this is proposed concept">Proposed Concept</mdb-title>
-        <mdb-search-box id='proposedConcept' class="modal-search-box" label=" " filter="{{proposedConceptName}}" placeholder="Enter Concept" maxlength=199></mdb-search-box>
+        <mdb-search-box id='proposedConcept' class="modal-search-box" label=" " filter="{{proposedConceptName}}" placeholder="Enter Concept" 
+        allowed-pattern='[a-zA-Z- ]' maxlength=100></mdb-search-box>
         <mdb-title class="help-title" level="3">LOB</mdb-title>
         <div id="radio-list">
           <paper-radio-group>
