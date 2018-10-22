@@ -284,9 +284,9 @@ Custom property | Description | Default
       <div class="sorting-options">
         Sorted by
         <mdb-radio-list size="small" selected="{{columnsSortBy}}">
-          <paper-radio-button name="relevance">RELEVANCE</paper-radio-button>
+          <!-- <paper-radio-button name="relevance">RELEVANCE</paper-radio-button> -->
           <paper-radio-button name="recency">RECENCY</paper-radio-button>
-          <paper-radio-button name="alphabetically">ALPHABETICALLY</paper-radio-button>
+          <paper-radio-button name="alphabetical">ALPHABETICALLY</paper-radio-button>
           <paper-radio-button name="none">NONE</paper-radio-button>
         </mdb-radio-list>
       </div>
@@ -407,7 +407,7 @@ Custom property | Description | Default
 
         columnsSortBy: {
           type: String,
-          value: 'relevance',
+          value: 'alphabetical',
           reflectToAttribute: true,
           notify: true
         },
