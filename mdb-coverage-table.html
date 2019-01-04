@@ -301,7 +301,7 @@ Custom property | Description | Default
       </div>
     </div>
     <atom-table items="{{items}}" allow-column-paging column-page-size="{{columnPageSize}}" column-page-num="{{columnPageNum}}"
-      total-columns="[[totalColumns]]">
+      total-columns="[[totalColumns]]" column-pagination-options="[[_columnPaginationOptions]]">
       <template is="dom-repeat" items="{{columns}}" as="column" index-as="colIndex">
         <vaadin-grid-column>
           <template class="header">
@@ -385,6 +385,11 @@ Custom property | Description | Default
         name: {
           type: String,
           value: 'mdb-coverage-table',
+        },
+
+        _columnPaginationOptions: {
+          type: Array,
+          value: [1,2,3]
         },
 
         titleText: String,
