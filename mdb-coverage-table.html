@@ -10,6 +10,7 @@
 <link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
 <link rel="import" href="mdb-vaadin-grid-column-selector.html">
 <link rel="import" href="../paper-styles/typography.html">
+<link rel="import" href="../paper-tooltip/paper-tooltip.html">
 
 <!--
 `mdb-coverage-table`
@@ -333,7 +334,13 @@ Custom property | Description | Default
           </template>
           <template>
             <mdb-vaadin-grid-column-selector class$="[[_isSelected(selectedColumn, column.id)]] mdb-cell" path="[[column.id]]">
-              [[_getColValue(item, colIndex)]]
+              <span id='_[[index]][[colIndex]]'>[[_getColValue(item, colIndex)]]</span>
+                <template is='dom-if' if='[[!colIndex]]'>
+                  <paper-tooltip offset='[[_getToolTipOffset(item, colIndex)]]' position="right" for="_[[index]][[colIndex]]">[[_getColValue(item, colIndex)]]</paper-tooltip>
+                </template>
+                <template is='dom-if' if='[[colIndex]]'>
+                  <paper-tooltip position="left" for="_[[index]][[colIndex]]">[[_getColValue(item, colIndex)]]</paper-tooltip>
+                </template>
             </mdb-vaadin-grid-column-selector>
           </template>
         </vaadin-grid-column>
@@ -559,6 +566,32 @@ Custom property | Description | Default
 
       _getColValue: function (arr, index) {
         return (arr || [])[index] || '';
+      },
+
+      _getTableCellFont: function(){
+          if(this._tableCellFont)
+              return this._tableCellFont;
+
+          var elem = this.querySelector('atom-table');
+          this._tableCellFont = window.getComputedStyle(elem, null).getPropertyValue('font');
+
+          return this._tableCellFont;
+      },
+
+      _getTextWidth: function(text){
+          var myCanvas = this._canvas || (this._canvas = document.createElement("canvas"));
+          var context = myCanvas.getContext("2d");
+          context.font = this._getTableCellFont();
+          
+          var metrics = context.measureText(text);
+          return metrics.width;
+      },
+
+      _getToolTipOffset: function(item, colIndex){
+        var text = this._getColValue(item, colIndex);
+        var textWidth = this._getTextWidth(text || '');
+        var ratio = textWidth / text.length;
+        return text.length <= 30 ? 14 : -1 * Math.abs((text.length - 30) * ratio);
       },
 
       _refreshColumns: function (psize, pnum) {
